@@ -12,8 +12,23 @@ function getComputerChoice() {
       ? choice[1]
       : choice[2];
 }
+const button1 = document.createElement("button");
+button1.setAttribute("id", "button1");
+button1.setAttribute("style", "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin-right: 10px; line-height: .3;");
+button1.innerText = "paper";
+const button2 = document.createElement("button");
+button2.setAttribute("id", "button2");
+button2.setAttribute("style", "width: 150px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin-right: 10px; line-height: .3;");
+button2.innerText = "scissors";
+const button3 = document.createElement("button");
+button3.setAttribute("id", "button3");
+button3.setAttribute("style", "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; line-height: .3;");
+button3.innerText = "rock";
+document.body.appendChild(button1);
+document.body.appendChild(button2);
+document.body.appendChild(button3);
 
-// This function gets the user's choice and returns it as a string, in lower case, only accepts: rock, paper or scissors as input.//
+/* This function gets the user's choice and returns it as a string, in lower case, only accepts: rock, paper or scissors as input.//
 function getUserChoice() {
   let choice = prompt(
     "Please choose 1 option: 'Rock', 'Paper' or 'Scissors': ",
@@ -23,7 +38,7 @@ function getUserChoice() {
     return getUserChoice();
   }
   return choice;
-}
+} */
 
 /* game function compares the user's choice to the computer's choice and determines the winner, keeps the 
 count of round played and stops the game after 5 rounds and declares the winner. */
@@ -69,9 +84,17 @@ function game() {
       }
     }
   }
-
-/* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of the game and declares a winner or a draw. */
-  while (round < 5) {
+// creating an event listeners so the buttons call playRound and gets user's choice every time they are clicked.
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    let humanChoice = button.innerText;
+    let computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice);
+  });
+})
+   /* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of  the game and declares a winner or a draw. */
+  /*while (round < 5) {
     let humanChoice = getUserChoice();
     let computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
@@ -83,15 +106,12 @@ function game() {
     console.log("Round: " + round);
   }
   console.log("Final Player Score: " + humanScore);
-  console.log("Final Computer Score: " + computerScore);
-  
-  if (humanScore > computerScore) {
-    alert("You win!");
-  } else if (computerScore > humanScore) {
-    alert("You lose!");
-  } else {
-    alert("Draw");
-  }
-}
+  console.log("Final Computer Score: " + computerScore); */
 
+  if (humanScore = 5) {
+    alert("You win!");
+  } else if (computerScore = 5){
+    alert("You lose!");
+  } 
+}
 game();
