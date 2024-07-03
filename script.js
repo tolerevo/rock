@@ -41,7 +41,7 @@ function playGame() {
       alert("You Win! Rock beats scissors");
       ++humanScore;
     } else if (humanChoice === "paper" && computerChoice === "paper") {
-      alert("Draw! Paper equals Paper");
+      alert(`Draw! you choose ${humanChoice} and the computer choose ${computerChoice} too`);
     } else if (humanChoice === "paper" && computerChoice === "rock") {
       alert("You Win! Paper beats rock.");
       ++humanScore;
@@ -55,7 +55,7 @@ function playGame() {
       alert("You Win! Scissors beats paper");
       ++humanScore;
     } else if (humanChoice === "draw" && computerChoice === "draw") {
-      alert("Draw! Scissors equal scissors.");
+      alert(`Draw! you choose ${humanChoice} and the computer choose ${computerChoice} too`);
     } else {
       alert("invalid input");
     }
