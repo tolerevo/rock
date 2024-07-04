@@ -1,20 +1,12 @@
 /*this function gets a random integer between 0 and 2 and assign the result to a string (rock,paper or 
-scissors)*/
-function getComputerChoice() {
-  function getRandomNum(min, max) {
-    return Math.floor(Math.random() * max - min + 1) + min;
-  }
-  let computerResponse = getRandomNum(0, 2);
-  let choice = ["rock", "paper", "scissors"];
-  return computerResponse === 0
-    ? choice[0]
-    : computerResponse === 1
-      ? choice[1]
-      : choice[2];
-}
+scissors)*/ 
+let humanScore = 0;
+let computerScore = 0;
+
+
 const button1 = document.createElement("button");
 button1.setAttribute("id", "button1");
-button1.setAttribute("style", "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin-right: 10px; line-height: .3;");
+button1.setAttribute("style", "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin: 10px 10px 10px 20px; line-height: .3;");
 button1.innerText = "paper";
 const button2 = document.createElement("button");
 button2.setAttribute("id", "button2");
@@ -27,6 +19,14 @@ button3.innerText = "rock";
 document.body.appendChild(button1);
 document.body.appendChild(button2);
 document.body.appendChild(button3);
+const div = document.createElement("div");
+div.setAttribute("id", "results");
+div.setAttribute("style", "display: none;"); 
+document.body.appendChild(div);
+const p = document.createElement("p");
+p.setAttribute("id", "p");
+p.setAttribute("style", "font-size: 22px; font-weight: bold; justify-content: center; line-height: 1.5; text-align: center; color: white;");
+div.append(p);
 
 /* This function gets the user's choice and returns it as a string, in lower case, only accepts: rock, paper or scissors as input.//
 function getUserChoice() {
@@ -44,16 +44,11 @@ function getUserChoice() {
 count of round played and stops the game after 5 rounds and declares the winner. */
 function game() {
   let round = 0;
-  let humanScore = 0;
-  let computerScore = 0;
   
   // creates a new div referenced in the variable 'div'
-  const div = document.createElement("div");
   // gives an id "results" to the div
-  div.setAttribute("id", "results");
   // toggles the class "hide-results" to show the div and hides it when the game ends
   //div.classList.toggle("display-results");
-  document.body.appendChild(div);
   /* play round function compares the user's choice to the computer's choice and applies the rules of the 
   game to decide the winner of a single round */
   function playRound(humanSelection, computerSelection) {
@@ -94,26 +89,51 @@ function game() {
 // creating an event listeners so the buttons call playRound and gets user's choice every time they are clicked.
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
-  button.addEventListener("click", event => {
-    let humanChoice = event.target.innerText;
-    console.log(humanChoice);
-    let computerChoice = getComputerChoice();
-    console.log(computerChoice);
-    playRound(humanChoice, computerChoice);
-    // shows the results of the game in the div with id "results"
-    let div = document.getElementById("results");
-    if (!div.classList.contains("display-results")) {
-      div.classList.toggle("display-results");
-      div.setAttribute("style", "display: block; width: 200px; height: 100px; background-color: #EDEEF1; padding: 5px; border-radius: 5px; justify-content: center; margin: 10px;");
-    }
-    const p = document.createElement("p");
-    p.setAttribute("style", "font-size: 14px; font-weight: bold; justify-content: center; line-height: 1.2; text-align: center;");
-    p.innerText = (`Computer chose: ${computerChoice}\r Player chose: ${humanChoice} \r Player Points: ${humanScore} \r Computer Points: ${computerScore} \r Current Round: ${round}`); 
-    div.appendChild(p);
+  button.addEventListener("click", function() {
+    getUserChoice();
+  });
+
+  const getUserChoice = () => { 
+    let humanChoice = button.innerText;
+    return humanChoice
+  }
+
+function getComputerChoice() {
+  function getRandomNum(min, max) {
+    return Math.floor(Math.random() * max - min + 1) + min;
+  }
+  let computerResponse = getRandomNum(0, 2);
+  let choice = ["rock", "paper", "scissors"];
+  return computerResponse === 0
+    ? choice[0]
+    : computerResponse === 1
+      ? choice[1]
+      : choice[2];
+}
+
+button.addEventListener("click", () => {
+  let computerChoice = getComputerChoice();
+  let humanChoice = getUserChoice();
+  console.log(computerChoice);
+  playRound(humanChoice, computerChoice);
+  let div = document.getElementById("results");
+  if (!div.classList.contains("display-results")) {
+    div.classList.toggle("display-results");
+    div.setAttribute("style", "display: block; width: 100wh; height: 200px; background-color: #169FFF; padding: 5px; border-radius: 5px; justify-content: center; margin: 20px 10px; padding: 10px;");
+  }
+  
+  document.querySelector("p").innerText = (`Computer Chose: ${computerChoice} \r Player Chose: ${humanChoice} \r Player Points: ${humanScore} \r Computer Points: ${computerScore} \r Current Round: ${round}`); 
+    // shows the results of the game in the div with id "results
+  
   })
+      
+  
   
 })
 
+}
+
+game();
     /*if (humanScore >= 5) {
       console.log("You win!");
       humanScore = 0;
@@ -135,6 +155,3 @@ buttons.forEach((button) => {
   }
   console.log("Final Player Score: " + humanScore);
   console.log("Final Computer Score: " + computerScore); */
-}
-
-game();
