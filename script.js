@@ -53,36 +53,36 @@ function game() {
   game to decide the winner of a single round */
   function playRound(humanSelection, computerSelection) {
     if (humanSelection === computerSelection) {
-      alert("Draw");
+      console.log("Draw");
     }
 
     if (humanSelection === "rock") {
       if (computerSelection === "scissors") {
         humanScore++;
-        alert(`You win! ${humanSelection} beats ${computerSelection}`);
+        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
       } else if (computerSelection === "paper") {
         computerScore++;
-        alert(`You loss! ${computerSelection} beats ${humanSelection}`);
+        console.log(`You loss! ${computerSelection} beats ${humanSelection}`);
       }
     }
 
     if (humanSelection === "scissors") {
       if (computerSelection === "paper") {
         humanScore++;
-        alert(`You win! ${humanSelection} beats ${computerSelection}`);
+        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
       } else if (computerSelection === "rock") {
         computerScore++;
-        alert(`You loss! ${computerSelection} beats ${humanSelection}`);
+        console.log(`You loss! ${computerSelection} beats ${humanSelection}`);
       }
     }
 
     if (humanSelection === "paper") {
       if (computerSelection === "rock") {
         humanScore++;
-        alert(`You win! ${humanSelection} beats ${computerSelection}`);
+        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
       } else if (computerSelection === "scissors") {
         computerScore++;
-        alert(`You loss! ${computerSelection} beats ${humanSelection}`);
+        console.log(`You loss! ${computerSelection} beats ${humanSelection}`);
       }
     }
   }
@@ -114,7 +114,6 @@ function getComputerChoice() {
 button.addEventListener("click", () => {
   let computerChoice = getComputerChoice();
   let humanChoice = getUserChoice();
-  console.log(computerChoice);
   playRound(humanChoice, computerChoice);
   let div = document.getElementById("results");
   if (!div.classList.contains("display-results")) {
