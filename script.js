@@ -46,7 +46,14 @@ function game() {
   let round = 0;
   let humanScore = 0;
   let computerScore = 0;
-
+  
+  // creates a new div referenced in the variable 'div'
+  const div = document.createElement("div");
+  // gives an id "results" to the div
+  div.setAttribute("id", "results");
+  // toggles the class "hide-results" to show the div and hides it when the game ends
+  //div.classList.toggle("display-results");
+  document.body.appendChild(div);
   /* play round function compares the user's choice to the computer's choice and applies the rules of the 
   game to decide the winner of a single round */
   function playRound(humanSelection, computerSelection) {
@@ -87,12 +94,33 @@ function game() {
 // creating an event listeners so the buttons call playRound and gets user's choice every time they are clicked.
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    let humanChoice = button.innerText;
+  button.addEventListener("click", event => {
+    let humanChoice = event.target.innerText;
+    console.log(humanChoice);
     let computerChoice = getComputerChoice();
+    console.log(computerChoice);
     playRound(humanChoice, computerChoice);
-  });
+    // shows the results of the game in the div with id "results"
+    let div = document.getElementById("results");
+    if (!div.classList.contains("display-results")) {
+      div.classList.toggle("display-results");
+      div.setAttribute("style", "display: block; width: 200px; height: 100px; background-color: #EDEEF1; padding: 5px; border-radius: 5px; justify-content: center; margin: 10px;");
+    }
+    const p = document.createElement("p");
+    p.setAttribute("style", "font-size: 14px; font-weight: bold; justify-content: center; line-height: 1.2; text-align: center;");
+    p.innerText = (`Computer chose: ${computerChoice}\r Player chose: ${humanChoice} \r Player Points: ${humanScore} \r Computer Points: ${computerScore} \r Current Round: ${round}`); 
+    div.appendChild(p);
+  })
+  
 })
+
+    /*if (humanScore >= 5) {
+      console.log("You win!");
+      humanScore = 0;
+      } else if (computerScore >= 5){
+        console.log("You lose!");
+        computerScore = 0;
+      } */
    /* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of  the game and declares a winner or a draw. */
   /*while (round < 5) {
     let humanChoice = getUserChoice();
@@ -107,11 +135,6 @@ buttons.forEach((button) => {
   }
   console.log("Final Player Score: " + humanScore);
   console.log("Final Computer Score: " + computerScore); */
-
-  if (humanScore = 5) {
-    alert("You win!");
-  } else if (computerScore = 5){
-    alert("You lose!");
-  } 
 }
+
 game();
