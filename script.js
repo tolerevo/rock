@@ -1,12 +1,99 @@
-/* game function compares the user's choice to the computer's choice and determines the winner, keeps the 
-count of round played and stops the game after 5 rounds and declares the winner. */
-function playGame() {
-  let round = 0
-  let humanScore = 0
-  let computerScore = 0
+/*this function gets a random integer between 0 and 2 and assign the result to a string (rock,paper or 
+scissors)*/
+const paperBtn = document.getElementById("paperBtn");
+paperBtn.setAttribute(
+  "style",
+  "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin: 10px 10px 10px 20px; line-height: .3;",
+);
+paperBtn.innerText = "paper";
+const scissorsBtn = document.getElementById("scissorsBtn");
+scissorsBtn.setAttribute(
+  "style",
+  "width: 150px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; margin-right: 10px; line-height: .3;",
+);
+scissorsBtn.innerText = "scissors";
+const rockBtn = document.getElementById("rockBtn");
+rockBtn.setAttribute(
+  "style",
+  "width: 100px; height: 50px; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; line-height: .3;",
+);
+rockBtn.innerText = "rock";
+const resultsDiv = document.getElementById("resultsDiv");
+resultsDiv.setAttribute("style", "display: none;");
+const resultsP = document.getElementById("resultsP");
+resultsP.setAttribute(
+  "style",
+  "font-size: 22px; font-weight: bold; justify-content: center; line-height: 1.5; text-align: center; color: white;",
+);
+const resultsMessage = document.getElementById("resultsMessage");
+resultsMessage.setAttribute(
+  "style",
+  "font-size: 22px; font-weight: bold; justify-content: center; line-height: 1.5; text-align: center; color: white;",
+);
 
-  /*this function gets a random integer between 0 and 2 and assign the result to a string (rock,paper or 
-scissors)*/ 
+/* game function compares the user's choice to the computer's choice and determines the winner, keeps the 
+count of round played and stops the game when a player reaches 5 points. */
+function game() {
+  let round = 0;
+  let humanScore = 0;
+  let computerScore = 0;
+
+  /* play round function compares the user's choice to the computer's choice and applies the rules of the 
+  game to decide the winner of a single round */
+  function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+      resultsMessage.innerText = "Draw";
+    }
+    if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "scissors" && computerChoice === "paper") ||
+      (humanChoice === "paper" && computerChoice === "rock")
+    ) {
+      humanScore++;
+      resultsMessage.innerText = `You win! ${humanChoice} beats ${computerChoice}`;
+    }
+    if (
+      (humanChoice === "scissors" && computerChoice === "rock") ||
+      (humanChoice === "paper" && computerChoice === "scissors") ||
+      (humanChoice === "rock" && computerChoice === "paper")
+    ) {
+      computerScore++;
+      resultsMessage.innerText = `You loss! ${computerChoice} beats ${humanChoice}`;
+    }
+    if (humanScore === 5) {
+      resultsMessage.innerText = "You win!";
+      resetGame();
+    } else if (computerScore === 5) {
+      resultsMessage.innerText = "You lose!";
+      resetGame();
+    }
+  }
+  const resetGame = () => {
+    document.getElementById("resultsP").setAttribute("style", "display: none;");
+    const newGameBtn = document.getElementById("newGameBtn");
+    newGameBtn.setAttribute(
+      "style",
+      "width: 200px; height: auto; background-color: #169FFF; padding: 20px; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; justify-content: center; line-height: .3;",
+    );
+    newGameBtn.innerText = "Play Again";
+    newGameBtn.addEventListener("click", () => {
+      humanScore = 0;
+      computerScore = 0;
+      round = 0;
+      const resultsP = document.getElementById("resultsP");
+      resultsP.setAttribute(
+        "style",
+        "display: block; font-size: 22px; font-weight: bold; justify-content: center; line-height: 1.5; text-align: center; color: white;",
+      );
+      resultsP.innerText = `Current Round: ${round} C'mon let's play!`;
+      newGameBtn.setAttribute(
+        "style",
+        "display: none; width: 0px; height: 0px;",
+      );
+      resultsMessage.innerText = "";
+    });
+  };
+
   function getComputerChoice() {
     function getRandomNum(min, max) {
       return Math.floor(Math.random() * max - min + 1) + min;
@@ -19,62 +106,35 @@ scissors)*/
         ? choice[1]
         : choice[2];
   }
+  // creating an event listeners so the buttons call playRound and gets user's choice every time they are clicked.
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      getHumanChoice();
+    });
 
+    const getHumanChoice = () => {
+      let humanChoice = button.innerText;
+      return humanChoice;
+    };
 
-// This function gets the user's choice and returns it as a string, in lower case, only accepts: rock, paper or scissors as input.//
-function getHumanChoice() {
-  let choice = prompt(
-    "Please choose 1 option: 'Rock', 'Paper' or 'Scissors': ",
-  ).toLowerCase();
-  if (choice!== "rock" && choice!== "paper" && choice!== "scissors") {
-    alert("Invalid choice");
-    return getHumanChoice();
-  }
-  return choice;
+    button.addEventListener("click", () => {
+      round = round + 1;
+      let computerSelection = getComputerChoice();
+      let humanSelection = getHumanChoice();
+      playRound(humanSelection, computerSelection);
+      let div = document.getElementById("resultsDiv");
+      if (!div.classList.contains("display-results")) {
+        div.classList.toggle("display-results");
+        div.setAttribute(
+          "style",
+          "display: block; width: 100wh; height: auto; background-color: #169FFF; padding: 5px; border-radius: 5px; justify-content: center; margin: 20px 10px; padding: 10px;",
+        );
+      }
+      // shows the results of the game in the p tag with id "resultsP
+      document.getElementById("resultsP").innerText =
+        `Computer Chose: ${computerSelection} \r Player Chose: ${humanSelection} \r Player Points: ${humanScore} \r Computer Points: ${computerScore} \r Current Round: ${round}`;
+    });
+  });
 }
-  /* play round function compares the user's choice to the computer's choice and applies the rules of the 
-  game to decide the winner of a single round */
-  function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-      console.log("Draw")
-    }
-    if ((humanChoice === "rock" && computerChoice === "scissors")||
-        (humanChoice === "scissors" && computerChoice === "paper")||
-        (humanChoice === "paper" && computerChoice === "rock")) {
-          humanScore++
-          console.log(`You win! ${humanChoice} beats ${computerChoice}`)
-    }
-    if ((computerChoice === "rock" && humanChoice === "scissors")||
-        (computerChoice === "scissors" && humanChoice === "paper")||
-        (computerChoice === "paper" && humanChoice === "rock")) {
-          computerScore++;
-          console.log(`You loss! ${computerChoice} beats ${humanChoice}`)
-    }
-  }
-  /* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of the game and declares a winner or a draw. */
-  do {
-    round = round + 1;
-    let humanSelection = getHumanChoice();
-    let computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-    console.log("Computer Chose: " + computerSelection);
-    console.log("Player Chose: " + humanSelection);
-    console.log("Player Points: " + humanScore);
-    console.log("Computer Points: " + computerScore);
-    console.log("Current Round: " + round);
-  }
-  while (round < 5); 
-
-  console.log("Final Player Score: " + humanScore);
-  console.log("Final Computer Score: " + computerScore);
-  
-  if (humanScore > computerScore) {
-    alert("You win! you have " + humanScore + " Points, Computer has " + computerScore + " points");
-  } else if (computerScore > humanScore) {
-    alert("You lose! you have " + humanScore + " Points, Computer has " + computerScore + " points");
-  } else {
-    alert("Draw! both of you ended with " + humanScore + " points");
-  }
-}
-
-playGame();
+game();
