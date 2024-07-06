@@ -1,5 +1,5 @@
 /*this function gets a random integer between 0 and 2 and assign the result to a string (rock,paper or 
-scissors)*/
+scissors)*/ 
 function getComputerChoice() {
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * max - min + 1) + min;
@@ -28,49 +28,30 @@ function getHumanChoice() {
 /* game function compares the user's choice to the computer's choice and determines the winner, keeps the 
 count of round played and stops the game after 5 rounds and declares the winner. */
 function playGame() {
-  let round = 0;
-  let humanScore = 0;
-  let computerScore = 0;
+  let round = 0
+  let humanScore = 0
+  let computerScore = 0
 
   /* play round function compares the user's choice to the computer's choice and applies the rules of the 
   game to decide the winner of a single round */
   function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-      console.log("Draw");
+      console.log("Draw")
     }
-
-    if (humanChoice === "rock") {
-      if (computerChoice === "scissors") {
-        humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-      } else if (computerChoice === "paper") {
-        computerScore++;
-        console.log(`You loss! ${computerChoice} beats ${humanChoice}`);
-      }
+    if ((humanChoice === "rock" && computerChoice === "scissors")||
+        (humanChoice === "scissors" && computerChoice === "paper")||
+        (humanChoice === "paper" && computerChoice === "rock")) {
+          humanScore++
+          console.log(`You win! ${humanChoice} beats ${computerChoice}`)
     }
-
-    if (humanChoice === "scissors") {
-      if (computerChoice === "paper") {
-        humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-      } else if (computerChoice === "rock") {
-        computerScore++;
-        console.log(`You loss! ${computerChoice} beats ${humanChoice}`);
-      }
-    }
-
-    if (humanChoice === "paper") {
-      if (computerChoice === "rock") {
-        humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-      } else if (computerChoice === "scissors") {
-        computerScore++;
-        console.log(`You loss! ${computerChoice} beats ${humanChoice}`);
-      }
+    if ((computerChoice === "rock" && humanChoice === "scissors")||
+        (computerChoice === "scissors" && humanChoice === "paper")||
+        (computerChoice === "paper" && humanChoice === "rock")) {
+          computerScore++;
+          console.log(`You loss! ${computerChoice} beats ${humanChoice}`)
     }
   }
-
-/* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of the game and declares a winner or a draw. */
+  /* here we use a while loop to set rounds to 5 and applies logic to play them, then logs the results of the game and declares a winner or a draw. */
   while (round < 5) {
     let humanSelection = getHumanChoice();
     let computerSelection = getComputerChoice();
