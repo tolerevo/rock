@@ -30,7 +30,10 @@ resultsMessage.setAttribute(
   "style",
   "font-size: 22px; font-weight: bold; justify-content: center; line-height: 1.5; text-align: center; color: white;",
 );
-
+newGameBtn.setAttribute(
+  "style",
+  "display: none; width: 0px; height: 0px;",
+);
 /* game function compares the user's choice to the computer's choice and determines the winner, keeps the 
 count of round played and stops the game when a player reaches 5 points. */
 function game() {
